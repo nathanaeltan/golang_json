@@ -1,0 +1,25 @@
+{
+  "customers": [
+    {
+      "customerId": 1,
+      "country": "SG",
+      "language": "EN",
+      "age": 23,
+      "weight": 50.7
+    },
+    {
+      "customerId": 2,
+      "country": "SG",
+      "language": "EN",
+      "age": 33,
+      "weight": 65.7
+    },
+    {
+      "customerId": 4,
+      "country": "SG",
+      "language": "EN",
+      "age": 42,
+      "weight": 72.1
+    }
+  ]
+}

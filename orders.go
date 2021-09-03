@@ -22,7 +22,7 @@ type Orders struct {
 	} `json:"orders"`
 }
 
-func makeRequest(c int) {
+func makeRequest(c int) error {
 	url := "https://notification.decathlon.sg/api/order/getOrderByCustomer.php"
 	postValue := map[string]int{
 		"customerId": c,
@@ -31,22 +31,22 @@ func makeRequest(c int) {
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Println("Error: ", err)
-		os.Exit(1)
+		return err
 	}
 
 	defer resp.Body.Close()
 	bytes, errRead := ioutil.ReadAll(resp.Body)
 	if errRead != nil {
-		os.Exit(1)
+		return err
 	}
 	var orders Orders
 	err = json.Unmarshal(bytes, &orders)
 	if err != nil {
 		fmt.Println("Error:", err)
-		os.Exit(1)
+		return err
 	}
 	orders.print(c)
-
+	return nil
 }
 
 func (o Orders) print(c int) {
@@ -86,18 +86,22 @@ func (o Orders) print(c int) {
 	endResultStr := fmt.Sprintln("----------------    End Result           -----------------")
 	fmt.Println(endResultStr)
 	fileData = append(fileData, endResultStr)
-	writeToFile(strings.Join(fileData, ""))
+	err := writeToFile(strings.Join(fileData, ""))
+	if err != nil {
+		fmt.Println("Error in Writing to file: ", err)
+	}
 }
 
-func writeToFile(text string) {
+func writeToFile(text string) error {
 	f, err := os.OpenFile("data", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	defer f.Close()
 
 	if _, err = f.WriteString(text); err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }

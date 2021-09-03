@@ -18,7 +18,7 @@ type Customers struct {
 //go:embed raw.json
 var jsonFile string
 
-func readJsonAndReturnCustomers(filename string) (Customers, error) {
+func readJsonAndReturnCustomers() (Customers, error) {
 
 	var data Customers
 

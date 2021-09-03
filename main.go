@@ -7,7 +7,7 @@ import (
 
 func main() {
 
-	data, err := readJsonAndReturnCustomers("raw.json")
+	data, err := readJsonAndReturnCustomers()
 	if err != nil {
 		fmt.Println("Error: ", err)
 		os.Exit(1)
@@ -15,7 +15,11 @@ func main() {
 
 	if len(data.Customers) > 0 {
 		for _, customer := range data.Customers {
-			makeRequest(customer.CustomerId)
+			err = makeRequest(customer.CustomerId)
+			if err != nil {
+				fmt.Println("Error: ", err)
+				os.Exit(1)
+			}
 		}
 	} else {
 		fmt.Println("No Customers found. Exiting Program ....")

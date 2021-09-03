@@ -16,13 +16,16 @@ type Customers struct {
 }
 
 func readJsonAndReturnCustomers(filename string) (Customers, error) {
-	plan, _ := ioutil.ReadFile(filename)
-
+	plan, err := ioutil.ReadFile(filename)
 	var data Customers
-	err := json.Unmarshal([]byte(plan), &data)
 
 	if err != nil {
-		return Customers{}, err
+		return data, err
+	}
+	err = json.Unmarshal([]byte(plan), &data)
+
+	if err != nil {
+		return data, err
 	}
 
 	return data, nil

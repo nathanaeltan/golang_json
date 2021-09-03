@@ -12,9 +12,14 @@ func main() {
 		fmt.Println("Error: ", err)
 		os.Exit(1)
 	}
-	for _, customer := range data.Customers {
-		makeRequest(customer.CustomerId)
+
+	if len(data.Customers) > 0 {
+		for _, customer := range data.Customers {
+			makeRequest(customer.CustomerId)
+		}
+	} else {
+		fmt.Println("No Customers found.")
+		os.Exit(1)
 	}
 
 }
-

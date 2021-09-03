@@ -8,7 +8,9 @@ import (
 	"net/http"
 	"os"
 	"reflect"
+	"strings"
 )
+
 type Orders struct {
 	NumberOfOrders int `json:"numberOfOrder"`
 	Orders         []struct {
@@ -19,7 +21,6 @@ type Orders struct {
 		StoreId      int    `json:"storeId"`
 	} `json:"orders"`
 }
-
 
 func makeRequest(c int) {
 	url := "https://notification.decathlon.sg/api/order/getOrderByCustomer.php"
@@ -48,30 +49,55 @@ func makeRequest(c int) {
 
 }
 
-
-
 func (o Orders) print(c int) {
-	fmt.Println("---------------- Result of Customer ID:", c, "-----------------")
-	if len(o.Orders) > 0 {
-		fmt.Printf("There are %v orders\n", o.NumberOfOrders)
+	resultCustomerIdStr := fmt.Sprintln("---------------- Result of Customer ID:", c, "-----------------")
+	fileData := []string{}
 
+	fmt.Println(resultCustomerIdStr)
+	fileData = append(fileData, resultCustomerIdStr)
+	if len(o.Orders) > 0 {
+		noOfOrdersStr := fmt.Sprintf("There are %v orders\n", o.NumberOfOrders)
+		fmt.Println(noOfOrdersStr)
+		fileData = append(fileData, noOfOrdersStr)
 		for _, ord := range o.Orders {
-			fmt.Println("----------------    Start of Order          -----------------")
+			startOrderStr := fmt.Sprintln("----------------    Start of Order          -----------------")
+			fmt.Println(startOrderStr)
+			fileData = append(fileData, startOrderStr)
 
 			// fmt.Printf("%+v\n\n", ord)
 			v := reflect.ValueOf(ord)
 			typeofV := v.Type()
 			for i := 0; i < v.NumField(); i++ {
-				fmt.Println(typeofV.Field(i).Name, ":", v.Field(i).Interface())
+				orderFieldValueStr := fmt.Sprintln(typeofV.Field(i).Name, ":", v.Field(i).Interface())
+				fmt.Println(orderFieldValueStr)
+				fileData = append(fileData, orderFieldValueStr)
 
 			}
-
-			fmt.Println("----------------    End of Order            -----------------")
+			endOfOrderStr := fmt.Sprintln("----------------    End of Order            -----------------")
+			fmt.Println(endOfOrderStr)
+			fileData = append(fileData, endOfOrderStr)
 
 		}
 	} else {
-		fmt.Println("There are no Orders")
+		noOrdersStr := fmt.Sprintln("There are no Orders")
+		fmt.Println(noOrdersStr)
+		fileData = append(fileData, noOrdersStr)
 	}
-	fmt.Println("----------------    End Result           -----------------")
+	endResultStr := fmt.Sprintln("----------------    End Result           -----------------")
+	fmt.Println(endResultStr)
+	fileData = append(fileData, endResultStr)
+	writeToFile(strings.Join(fileData, ""))
+}
 
+func writeToFile(text string) {
+	f, err := os.OpenFile("data", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		panic(err)
+	}
+
+	defer f.Close()
+
+	if _, err = f.WriteString(text); err != nil {
+		panic(err)
+	}
 }

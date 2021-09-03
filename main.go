@@ -18,7 +18,7 @@ func main() {
 			makeRequest(customer.CustomerId)
 		}
 	} else {
-		fmt.Println("No Customers found.")
+		fmt.Println("No Customers found. Exiting Program ....")
 		os.Exit(1)
 	}
 

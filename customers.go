@@ -1,8 +1,8 @@
 package main
 
 import (
+	_ "embed"
 	"encoding/json"
-	"io/ioutil"
 )
 
 type Customers struct {
@@ -15,14 +15,14 @@ type Customers struct {
 	} `json:"customers"`
 }
 
+//go:embed raw.json
+var jsonFile string
+
 func readJsonAndReturnCustomers(filename string) (Customers, error) {
-	plan, err := ioutil.ReadFile(filename)
+
 	var data Customers
 
-	if err != nil {
-		return data, err
-	}
-	err = json.Unmarshal([]byte(plan), &data)
+	err := json.Unmarshal([]byte(jsonFile), &data)
 
 	if err != nil {
 		return data, err

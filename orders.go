@@ -27,7 +27,11 @@ func makeRequest(c int) error {
 	postValue := map[string]int{
 		"customerId": c,
 	}
-	jsonValue, _ := json.Marshal(postValue)
+	jsonValue, err := json.Marshal(postValue)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return err
+	}
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Println("Error: ", err)

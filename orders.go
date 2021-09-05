@@ -45,11 +45,11 @@ func makeRequest(c int) error {
 		fmt.Println("Error:", err)
 		return err
 	}
-	orders.print(c)
+	orders.printAndWriteToFile(c)
 	return nil
 }
 
-func (o Orders) print(c int) {
+func (o Orders) printAndWriteToFile(c int) {
 	resultCustomerIdStr := fmt.Sprintln("---------------- Result of Customer ID:", c, "-----------------")
 	fileData := []string{}
 

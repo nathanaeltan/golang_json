@@ -2,9 +2,9 @@
 
 ## Task
 ---
-1. Read the raw.json file 
-2. Loop through the customers slice and send a POST request with the customerId to the web service
-3. Save the response to a log file and print out the response
+- [x] Read the raw.json file 
+- [x] Loop through the customers slice and send a POST request with the customerId to the web service
+- [x] Save the response to a log file and print out the response
 
 ## Installation 
 ---
@@ -18,3 +18,8 @@
 4. A golang_json executable file should now be in the root directory of the project
 5. run the executable with ```./golang_json```
 
+### Alternative Run
+1. Alternatively if you would like to run the go code without creating an executable, run ```go run main.go customers.go orders.go```
+
+
+--- 

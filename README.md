@@ -28,3 +28,4 @@
 - Had opportunities to work with structs and function receivers which was quite new to me.
 - I added the raw.json file as an embedded file instead of reading it so that the executable can be run from anywhere (would love to know if that was a common use case)
 - Would have liked to use Go routines and channels on this, but was slightly unsure whether this was a common use case to use routines for looping through and calling APIS.
+- Had some issues in ensuring the executable worked properly on a windows machine. Temporarily solved it with the embeded raw.json file.
